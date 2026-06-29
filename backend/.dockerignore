@@ -1,0 +1,16 @@
+venv/
+__pycache__/
+*.py[cod]
+*.log
+*.bak*
+.pytest_cache/
+.mypy_cache/
+.env
+data/uploads/*
+data/results/*
+data/gtrace_results/*
+data/gtrace_info_cache/*
+!data/uploads/.gitkeep
+!data/results/.gitkeep
+!data/gtrace_results/.gitkeep
+!data/gtrace_info_cache/.gitkeep
