@@ -34,7 +34,59 @@ Supported deployment platforms:
 - Windows with Docker Desktop and WSL 2
 - macOS with Docker Desktop, including Apple Silicon
 
-### Start the application
+### Deploy using prebuilt images
+
+This is the recommended deployment method for users who do not need to build the application from source.
+
+Clone the repository:
+
+    git clone https://github.com/joshi1207/pcap-analyzer.git
+    cd pcap-analyzer
+
+Start the application using the published GitHub Container Registry images:
+
+    docker compose -f compose.deploy.yaml up -d
+
+The deployment pulls these multi-platform images:
+
+    ghcr.io/joshi1207/pcap-analyzer-backend:latest
+    ghcr.io/joshi1207/pcap-analyzer-frontend:latest
+
+Supported image platforms:
+
+- `linux/amd64`
+- `linux/arm64`
+
+Open:
+
+    http://localhost:8080
+
+Check service status:
+
+    docker compose -f compose.deploy.yaml ps
+
+Check the frontend health endpoint:
+
+    curl http://localhost:8080/health
+
+Update to the latest published images:
+
+    docker compose -f compose.deploy.yaml pull
+    docker compose -f compose.deploy.yaml up -d
+
+View logs:
+
+    docker compose -f compose.deploy.yaml logs -f
+
+Stop the deployment while preserving analysis data:
+
+    docker compose -f compose.deploy.yaml down
+
+Stop the deployment and delete persistent analysis data:
+
+    docker compose -f compose.deploy.yaml down -v
+
+### Build and run from source
 
 From the project root:
 
@@ -68,9 +120,13 @@ For example, to use port `9080`:
 
     PCAP_ANALYZER_PORT=9080
 
-Restart the deployment:
+Restart a source-build deployment:
 
     docker compose up -d
+
+Or restart a prebuilt-image deployment:
+
+    docker compose -f compose.deploy.yaml up -d
 
 The application will then be available at:
 
