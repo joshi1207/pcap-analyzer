@@ -4,12 +4,11 @@ import shlex
 import subprocess
 import uuid
 from pathlib import Path
+from app.core.paths import DATA_DIR, GTRACE_RESULTS_DIR, GTRACE_INFO_CACHE_DIR
 
 
-BASE_DIR = Path("/opt/pcap-analyzer/backend/data")
-GTRACE_RESULTS_DIR = BASE_DIR / "gtrace_results"
+BASE_DIR = DATA_DIR
 GTRACE_RESULTS_DIR.mkdir(parents=True, exist_ok=True)
-GTRACE_INFO_CACHE_DIR = BASE_DIR / "gtrace_info_cache"
 GTRACE_INFO_CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
 

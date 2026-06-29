@@ -1,6 +1,7 @@
 import json
 from collections import Counter, defaultdict
 from pathlib import Path
+from app.core.paths import DATA_DIR
 
 from scapy.all import rdpcap, LLC, STP, Raw, DNS, DNSQR, DNSRR
 from scapy.layers.inet import IP, TCP, UDP, ICMP
@@ -9,7 +10,7 @@ from scapy.layers.inet6 import IPv6
 from app.analyzers.dns_analyzer import analyze_dns_packets
 from app.analyzers.tls_analyzer import analyze_tls_packets
 
-BASE_DIR = Path("/opt/pcap-analyzer/backend/data")
+BASE_DIR = DATA_DIR
 RESULTS_DIR = BASE_DIR / "results"
 
 

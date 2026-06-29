@@ -2,10 +2,9 @@ import os
 import uuid
 from pathlib import Path
 from fastapi import UploadFile
+from app.core.paths import DATA_DIR, UPLOAD_DIR, RESULTS_DIR
 
-BASE_DIR = Path("/opt/pcap-analyzer/backend/data")
-UPLOAD_DIR = BASE_DIR / "uploads"
-RESULTS_DIR = BASE_DIR / "results"
+BASE_DIR = DATA_DIR
 
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)

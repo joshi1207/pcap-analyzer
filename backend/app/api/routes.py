@@ -1,5 +1,6 @@
 import shutil
 from pathlib import Path
+from app.core.paths import DATA_DIR
 
 from fastapi import APIRouter, UploadFile, File, HTTPException, BackgroundTasks
 from app.services.jobs import create_job, get_job, save_uploaded_file, update_job_status
@@ -90,7 +91,7 @@ ALLOWED_EXTENSIONS = {".pcap", ".pcapng"}
 
 
 def flush_previous_analysis_data():
-    base_dir = Path("/opt/pcap-analyzer/backend/data")
+    base_dir = DATA_DIR
     uploads_dir = base_dir / "uploads"
     results_dir = base_dir / "results"
 
@@ -141,7 +142,7 @@ async def upload_pcap(
         import shutil
         from pathlib import Path
 
-        base_dir = Path("data")
+        base_dir = DATA_DIR
         uploads_dir = base_dir / "uploads" / job["job_id"]
         results_dir = base_dir / "results" / job["job_id"]
         results_dir.mkdir(parents=True, exist_ok=True)
