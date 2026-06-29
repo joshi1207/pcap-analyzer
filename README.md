@@ -190,3 +190,7 @@ The application has been validated with:
 - Summary, findings, and stream API responses
 
 This remains a pre-release project and should undergo security, licensing, and operational review before public distribution.
+
+## License
+
+Licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for details.
