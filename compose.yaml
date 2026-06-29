@@ -1,0 +1,44 @@
+name: pcap-analyzer
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: pcap-analyzer-backend:dev
+    cap_add:
+      - NET_RAW
+    volumes:
+      - uploads:/app/data/uploads
+      - results:/app/data/results
+      - gtrace-results:/app/data/gtrace_results
+      - gtrace-cache:/app/data/gtrace_info_cache
+    restart: unless-stopped
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3)"
+      interval: 30s
+      timeout: 5s
+      start_period: 10s
+      retries: 3
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: pcap-analyzer-frontend:dev
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+
+volumes:
+  uploads:
+  results:
+  gtrace-results:
+  gtrace-cache:

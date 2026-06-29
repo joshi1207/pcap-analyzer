@@ -1,6 +1,5 @@
 FROM python:3.12-slim
 
-ARG TARGETARCH
 ARG GTRACE_VERSION=0.10.1
 
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -17,6 +16,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 RUN set -eux; \
+    TARGETARCH="$(dpkg --print-architecture)"; \
     case "${TARGETARCH}" in \
       amd64|arm64) ;; \
       *) echo "Unsupported architecture: ${TARGETARCH}" >&2; exit 1 ;; \
