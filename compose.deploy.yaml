@@ -1,0 +1,40 @@
+name: pcap-analyzer
+
+services:
+  backend:
+    image: ${PCAP_ANALYZER_BACKEND_IMAGE:-ghcr.io/joshi1207/pcap-analyzer-backend:latest}
+    pull_policy: always
+    cap_add:
+      - NET_RAW
+    volumes:
+      - uploads:/app/data/uploads
+      - results:/app/data/results
+      - gtrace-results:/app/data/gtrace_results
+      - gtrace-cache:/app/data/gtrace_info_cache
+    restart: unless-stopped
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3)"
+      interval: 30s
+      timeout: 5s
+      start_period: 10s
+      retries: 3
+
+  frontend:
+    image: ${PCAP_ANALYZER_FRONTEND_IMAGE:-ghcr.io/joshi1207/pcap-analyzer-frontend:latest}
+    pull_policy: always
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "${PCAP_ANALYZER_PORT:-8080}:80"
+    restart: unless-stopped
+
+volumes:
+  uploads:
+  results:
+  gtrace-results:
+  gtrace-cache:
